@@ -28,28 +28,32 @@ platform :ios do
 	  cocoapods(repo_update: true, podfile: "./Podfile")
 	end
 
-	lane :alnoor_sandbox_build do |options|
+	lane :projectname_sandbox_build do |options|
 		path = gym(clean: true, configuration: "Debug.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-beta", "user": options[:username] }
 		upload params
 	end
 
-	lane :alnoor_staging_build do |options|
+	lane :projectname_staging_build do |options|
 		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-staging", "user": options[:username] }
 		upload params
 	end
 
-	
+	lane :projectname_beta_build do |options|
+		path = gym(clean: true, configuration: "Release.Internal.Production", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
+		params = { "path": path, "group": "ios-testers-beta", "user": options[:username] }
+		upload params
+	end
 
-	lane :alnoor_release_build do
+	lane :projectname_release_build do
 		path = gym(clean: true, configuration: "Release.Production", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "app-store")
 	end
 
 	lane :upload do |params|
 
   		upload_to_testflight(
-		  beta_app_feedback_email: "serdar.bakirtas@alnoortv.com",
+		  beta_app_feedback_email: "serdarbakirtas@gmail.com",
 		  demo_account_required: false,
 		  notify_external_testers: false,
 		  app_identifier: params[:app_id],
