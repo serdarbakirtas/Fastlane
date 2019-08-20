@@ -34,6 +34,12 @@ platform :ios do
 		upload params
 	end
 
+	lane :alnoor_staging_build do |options|
+		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
+		params = { "path": path, "group": "ios-testers-staging", "user": options[:username] }
+		upload params
+	end
+
 	
 
 	lane :alnoor_release_build do
