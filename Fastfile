@@ -30,19 +30,19 @@ platform :ios do
 
 	lane :projectname_sandbox_build do |options|
 		path = gym(clean: true, configuration: "Debug.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
-		params = { "path": path, "group": "ios-testers-beta", "user": options[:username] }
+		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
 		upload params
 	end
 
 	lane :projectname_staging_build do |options|
 		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
-		params = { "path": path, "group": "ios-testers-staging", "user": options[:username] }
+		params = { "path": path, "group": "ios-testers-staging", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
 		upload params
 	end
 
 	lane :projectname_beta_build do |options|
 		path = gym(clean: true, configuration: "Release.Internal.Production", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
-		params = { "path": path, "group": "ios-testers-beta", "user": options[:username] }
+		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
 		upload params
 	end
 
