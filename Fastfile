@@ -28,39 +28,39 @@ platform :ios do
 	  cocoapods(repo_update: true, podfile: "./Podfile")
 	end
 
-	lane :projectname_sandbox_build do |options|
-		path = gym(clean: true, configuration: "Debug.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
+	lane :example_sandbox_build do |options|
+		path = gym(clean: true, configuration: "Debug.Staging", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
+		#increment_version
 		upload params
 	end
 
-	lane :projectname_staging_build do |options|
-		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
+	lane :example_staging_build do |options|
+		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-staging", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
+		#increment_version
 		upload params
 	end
 
-	lane :projectname_beta_build do |options|
-		path = gym(clean: true, configuration: "Release.Internal.Production", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "ad-hoc")
+	lane :example_beta_build do |options|
+		path = gym(clean: true, configuration: "Release.Internal.Production", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
+		#increment_version
 		upload params
 	end
 
-	lane :projectname_release_build do
-		path = gym(clean: true, configuration: "Release.Production", scheme: "ProjectName", workspace: "ProjectName.xcworkspace", export_method: "app-store")
+	lane :example_release_build do
+		path = gym(clean: true, configuration: "Release.Production", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "app-store")
 	end
 
 	lane :upload do |params|
 
-  		upload_to_testflight(
-		  beta_app_feedback_email: "serdarbakirtas@gmail.com",
-		  demo_account_required: false,
-		  notify_external_testers: false,
-		  app_identifier: params[:app_id],
-		  ipa: params[:path],
-		  skip_submission: true,
-		  username: params[:user]
+		appcenter_upload(
+  			api_token: params[:api_token],
+  			owner_name: "example",
+  			app_name: params[:app_name],
+  			ipa: params[:path],
+  			notify_testers: true
 		)
   	end
 end
-
