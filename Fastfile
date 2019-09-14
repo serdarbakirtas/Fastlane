@@ -31,21 +31,18 @@ platform :ios do
 	lane :example_sandbox_build do |options|
 		path = gym(clean: true, configuration: "Debug.Staging", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
-		#increment_version
 		upload params
 	end
 
 	lane :example_staging_build do |options|
 		path = gym(clean: true, configuration: "Release.Internal.Staging", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-staging", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
-		#increment_version
 		upload params
 	end
 
 	lane :example_beta_build do |options|
 		path = gym(clean: true, configuration: "Release.Internal.Production", scheme: "ExampleProject", workspace: "ExampleProject.xcworkspace", export_method: "ad-hoc")
 		params = { "path": path, "group": "ios-testers-beta", "user": options[:username], "api_token": options[:api_token], "app_name": options[:app_name] }
-		#increment_version
 		upload params
 	end
 
